@@ -1,14 +1,30 @@
 package com.projects.f1leagueback.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.UUID;
 
+@Document(collection = "users")
 public class Driver {
 
+    @Id
     private UUID id;
+
+    @Field("name")
     private String name;
+
+    @Field("gamertag")
     private String gamertag;
+
+    @Field("email")
     private String email;
+
+    @Field("description")
     private String description;
+
+    @Field("photo")
     private String photo;
 
     public Driver() {
