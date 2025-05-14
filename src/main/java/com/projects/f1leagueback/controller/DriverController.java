@@ -22,4 +22,9 @@ public class DriverController {
         return driverService.driverCreation(driver);
 
     }
+
+    @DeleteMapping
+    public void deleteDriver(@RequestBody Driver driver) {
+        driverService.driverDeletion(driver);
+    }
 }

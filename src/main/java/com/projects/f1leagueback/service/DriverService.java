@@ -31,4 +31,10 @@ public class DriverService {
         driver.setId(driverUUID);
         return driverRepository.save(driver);
     }
+
+    // Driver Deletion
+    public void driverDeletion (Driver driver) {
+        logger.info("Deleting Driver");
+        driverRepository.deleteById(driver.getId());
+    }
 }
