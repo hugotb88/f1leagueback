@@ -12,7 +12,6 @@ public class DriverController {
 
     private final DriverService driverService;
 
-    @Autowired
     public DriverController(DriverService driverService) {
         this.driverService = driverService;
     }

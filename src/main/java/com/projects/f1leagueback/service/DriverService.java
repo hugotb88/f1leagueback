@@ -15,7 +15,6 @@ public class DriverService {
 
     private final DriverRepository driverRepository;
 
-    @Autowired
     public DriverService(DriverRepository driverRepository) {
         this.driverRepository = driverRepository;
     }
