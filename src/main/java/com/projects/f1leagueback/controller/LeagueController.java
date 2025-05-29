@@ -18,9 +18,9 @@ public class LeagueController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createLeague(@RequestBody League league) {
-        leagueService.createLeague(league);
-        return "League created";
+    public League createLeague(@RequestBody League league) {
+        League result = leagueService.createLeague(league);
+        return result;
     }
 
 }

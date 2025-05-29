@@ -1,7 +1,6 @@
 package com.projects.f1leagueback.service;
 
 import com.projects.f1leagueback.model.League;
-import com.projects.f1leagueback.repository.DriverRepository;
 import com.projects.f1leagueback.repository.LeagueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +18,16 @@ public class LeagueService {
         this.leagueRepository = leagueRepository;
     }
 
-    public void createLeague(League league) {
+    public League createLeague(League league) {
         // ID Creation
         UUID leagueUUID = UUID.randomUUID();
         logger.info("League UUID: " + leagueUUID);
 
         league.setId(leagueUUID);
-        leagueRepository.save(league);
+        League result = leagueRepository.save(league);
 
         logger.info("League created");
+        return result;
     }
 
 

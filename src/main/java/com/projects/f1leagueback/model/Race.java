@@ -1,22 +1,31 @@
 package com.projects.f1leagueback.model;
 
+import javax.sound.midi.Track;
+import java.util.List;
+
 public class Race {
 
     // Attributes
-    private int raceId;
-    private String trackName;
-    private String dateOfRace;
-    private DriverRace[] racers;
+    private long raceId;
+    private Tracks track;
+    private List<DriverRace> racers;
 
-    public Race(int raceId, String trackName, String dateOfRace, DriverRace[] racers) {
+    public Race() {
+    }
+
+    public Race(long raceId, Tracks track) {
         this.raceId = raceId;
-        this.trackName = trackName;
-        this.dateOfRace = dateOfRace;
+        this.track = track;
+    }
+
+    public Race(int raceId, Tracks track, List<DriverRace> racers) {
+        this.raceId = raceId;
+        this.track = track;
         this.racers = racers;
     }
 
     // Getters and Setters
-    public int getRaceId() {
+    public long getRaceId() {
         return raceId;
     }
 
@@ -24,27 +33,19 @@ public class Race {
         this.raceId = raceId;
     }
 
-    public String getTrackName() {
-        return trackName;
+    public Tracks getTrack() {
+        return track;
     }
 
-    public void setTrackName(String trackName) {
-        this.trackName = trackName;
+    public void setTrack(Tracks track) {
+        this.track = track;
     }
 
-    public String getDateOfRace() {
-        return dateOfRace;
-    }
-
-    public void setDateOfRace(String dateOfRace) {
-        this.dateOfRace = dateOfRace;
-    }
-
-    public DriverRace[] getRacers() {
+    public List<DriverRace> getRacers() {
         return racers;
     }
 
-    public void setRacers(DriverRace[] racers) {
+    public void setRacers(List<DriverRace> racers) {
         this.racers = racers;
     }
 }
