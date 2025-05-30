@@ -1,11 +1,15 @@
 package com.projects.f1leagueback.service;
 
+import com.projects.f1leagueback.exception.ResourceNotFoundException;
 import com.projects.f1leagueback.model.League;
+import com.projects.f1leagueback.model.Race;
 import com.projects.f1leagueback.repository.LeagueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -13,6 +17,7 @@ public class LeagueService {
     Logger logger = LoggerFactory.getLogger(LeagueService.class);
 
     private final LeagueRepository leagueRepository;
+    private League existingLeague;
 
     public LeagueService(LeagueRepository leagueRepository) {
         this.leagueRepository = leagueRepository;
@@ -30,5 +35,14 @@ public class LeagueService {
         return result;
     }
 
+    @Transactional
+    public League updateGPs(UUID leagueId, List<Race> updatedRaces) throws Exception {
+        // Get League
+        League existingLeague = leagueRepository.findById(leagueId).orElseThrow(() -> new ResourceNotFoundException("League not found"));
+
+        existingLeague.setLeagueGPs(updatedRaces);
+
+        return leagueRepository.save(existingLeague);
+    }
 
 }
