@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class LeagueService {
@@ -29,6 +30,8 @@ public class LeagueService {
         logger.info("League UUID: " + leagueUUID);
 
         league.setId(leagueUUID);
+        league.updateLeagueGpIDs();
+
         League result = leagueRepository.save(league);
 
         logger.info("League created");
@@ -40,7 +43,7 @@ public class LeagueService {
         // Get League
         League existingLeague = leagueRepository.findById(leagueId).orElseThrow(() -> new ResourceNotFoundException("League not found"));
 
-        existingLeague.setLeagueGPs(updatedRaces);
+        existingLeague.updateLeagueGpIDs();
 
         return leagueRepository.save(existingLeague);
     }

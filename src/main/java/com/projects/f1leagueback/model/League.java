@@ -7,6 +7,7 @@ import javax.sound.midi.Track;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class League {
@@ -92,5 +93,11 @@ public class League {
 
     public void setLeagueDrivers(List<DriverLeague> leagueDrivers) {
         this.leagueDrivers = leagueDrivers;
+    }
+
+    public void updateLeagueGpIDs() {
+        // Assign an id
+        AtomicInteger gpID = new AtomicInteger(1);
+        this.leagueGPs.stream().forEach(gp -> gp.setRaceId(gpID.getAndIncrement()));
     }
 }
