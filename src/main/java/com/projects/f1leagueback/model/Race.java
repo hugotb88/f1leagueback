@@ -1,35 +1,48 @@
 package com.projects.f1leagueback.model;
 
-import javax.sound.midi.Track;
 import java.util.List;
+import java.util.UUID;
 
 public class Race {
 
     // Attributes
+    private UUID leagueId;
     private long raceId;
     private Tracks track;
     private List<DriverRace> racers;
+    private boolean isFinished = false;
 
     public Race() {
     }
 
-    public Race(long raceId, Tracks track) {
-        this.raceId = raceId;
-        this.track = track;
-    }
-
-    public Race(int raceId, Tracks track, List<DriverRace> racers) {
+    public Race(UUID leagueId, long raceId, Tracks track, List<DriverRace> racers, boolean isFinished) {
+        this.leagueId = leagueId;
         this.raceId = raceId;
         this.track = track;
         this.racers = racers;
+        this.isFinished = isFinished;
     }
 
-    // Getters and Setters
+    public Race(UUID leagueId, long raceId, Tracks track) {
+        this.leagueId = leagueId;
+        this.raceId = raceId;
+        this.track = track;
+    }
+
+    // Getters and setters
+    public UUID getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(UUID leagueId) {
+        this.leagueId = leagueId;
+    }
+
     public long getRaceId() {
         return raceId;
     }
 
-    public void setRaceId(int raceId) {
+    public void setRaceId(long raceId) {
         this.raceId = raceId;
     }
 
@@ -47,5 +60,13 @@ public class Race {
 
     public void setRacers(List<DriverRace> racers) {
         this.racers = racers;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }

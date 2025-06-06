@@ -25,13 +25,6 @@ public class LeagueService {
     }
 
     public League createLeague(League league) {
-        // ID Creation
-        UUID leagueUUID = UUID.randomUUID();
-        logger.info("League UUID: " + leagueUUID);
-
-        league.setId(leagueUUID);
-        league.updateLeagueGpIDs();
-
         League result = leagueRepository.save(league);
 
         logger.info("League created");
@@ -43,6 +36,7 @@ public class LeagueService {
         // Get League
         League existingLeague = leagueRepository.findById(leagueId).orElseThrow(() -> new ResourceNotFoundException("League not found"));
 
+        existingLeague.setLeagueGPs(updatedRaces);
         existingLeague.updateLeagueGpIDs();
 
         return leagueRepository.save(existingLeague);

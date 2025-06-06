@@ -3,7 +3,6 @@ package com.projects.f1leagueback.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.sound.midi.Track;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,19 +46,23 @@ public class League {
     }
 
     private void loadGPsToLeague() {
+        // ID Creation
+        UUID leagueUUID = UUID.randomUUID();
+        this.leagueId = leagueUUID;
+
         AtomicLong gpId = new AtomicLong(1);
         this.leagueGPs = new ArrayList<>();
         for(Tracks track : Tracks.values()) {
-            this.leagueGPs.add(new Race(gpId.getAndIncrement(),track));
+            this.leagueGPs.add(new Race(this.getLeagueId(), gpId.getAndIncrement(),track));
         }
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public UUID getLeagueId() {
         return leagueId;
     }
 
-    public void setId(UUID leagueId) {
+    public void setLeagueId(UUID leagueId) {
         this.leagueId = leagueId;
     }
 
@@ -98,6 +101,9 @@ public class League {
     public void updateLeagueGpIDs() {
         // Assign an id
         AtomicInteger gpID = new AtomicInteger(1);
-        this.leagueGPs.stream().forEach(gp -> gp.setRaceId(gpID.getAndIncrement()));
+        this.leagueGPs.stream().forEach(gp -> {
+            gp.setRaceId(gpID.getAndIncrement());
+            gp.setLeagueId(this.getLeagueId());
+        });
     }
 }
