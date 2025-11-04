@@ -3,12 +3,12 @@ name: Build and Test (Run unit testing)
 
 # Events that trigger the workflow
 on:
-  # Trigger on pushes to the main branch
+  # Trigger on pushes to the master and develop branch
   push:
-    branches: [ "main" ]
+    branches: [ "master","develop" ]
   # Trigger on pull requests targeting the main branch
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master","develop" ]
 
 # Define the jobs to run
 jobs:
@@ -23,12 +23,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # 2. Set up Java 17 environment
-    - name: Set up JDK 17
+    # 2. Set up Java 21 environment
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         # Specifies the Java version
-        java-version: '17'
+        java-version: '21'
         # Specifies the Java distribution (e.g., Temurin, Adopt, Zulu)
         distribution: 'temurin'
         # Enables caching for Maven dependencies (~/.m2/repository)
@@ -39,6 +39,10 @@ jobs:
       # The '--batch-mode' flag prevents interactive prompts
       # 'verify' phase compiles, runs tests, and checks results
       run: mvn --batch-mode --update-snapshots verify
+      # Ennvironment variables for Mongo DB
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        MONGO_DB: ${{ secrets.MONGO_DB }}
 
     # 4. (Optional) Upload the resulting JAR/WAR artifact
     # This is useful if you want the artifact to be available for review or a later CD step
