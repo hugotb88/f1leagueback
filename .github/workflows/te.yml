@@ -1,0 +1,54 @@
+# Workflow Name
+name: Build and Test (Run unit testing)
+
+# Events that trigger the workflow
+on:
+  # Trigger on pushes to the main branch
+  push:
+    branches: [ "main" ]
+  # Trigger on pull requests targeting the main branch
+  pull_request:
+    branches: [ "main" ]
+
+# Define the jobs to run
+jobs:
+  build:
+    # Run the job on the latest Ubuntu runner
+    runs-on: ubuntu-latest
+    
+    # Define the steps for the job
+    steps:
+    
+    # 1. Checkout the source code
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    # 2. Set up Java 17 environment
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        # Specifies the Java version
+        java-version: '17'
+        # Specifies the Java distribution (e.g., Temurin, Adopt, Zulu)
+        distribution: 'temurin'
+        # Enables caching for Maven dependencies (~/.m2/repository)
+        cache: 'maven'
+
+    # 3. Build and Test the project with Maven
+    - name: Build and Run Tests
+      # The '--batch-mode' flag prevents interactive prompts
+      # 'verify' phase compiles, runs tests, and checks results
+      run: mvn --batch-mode --update-snapshots verify
+
+    # 4. (Optional) Upload the resulting JAR/WAR artifact
+    # This is useful if you want the artifact to be available for review or a later CD step
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        # The name under which the artifact will be stored
+        name: microservice-artifact
+        # Path to your compiled jar/war file (adjust the path if necessary)
+        # This assumes a typical Maven target directory structure
+        path: target/*.jar
+        # Retention period in days (optional)
+        retention-days: 5
