@@ -3,12 +3,12 @@ name: Build and Test (Run unit testing)
 
 # Events that trigger the workflow
 on:
-  # Trigger on pushes to the main branch
+  # Trigger on pushes to the master and develop branch
   push:
-    branches: [ "main" ]
+    branches: [ "master","develop" ]
   # Trigger on pull requests targeting the main branch
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master","develop" ]
 
 # Define the jobs to run
 jobs:
